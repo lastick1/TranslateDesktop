@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranslateDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Переводчик" Height="310.938" Width="668" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="117,112,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Перевести" HorizontalAlignment="Left" Margin="270,58,0,0" VerticalAlignment="Top" Width="130" Click="button_Click" Height="22"/>
+        <TextBox x:Name="srcTextBox" HorizontalAlignment="Left" Height="176" Margin="20,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="310"/>
+        <TextBox x:Name="destTextBox" HorizontalAlignment="Left" Height="176" Margin="342,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="300"/>
+        <ComboBox x:Name="srcLangComboBox" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="232"/>
+        <TextBlock x:Name="srcTextBlock" HorizontalAlignment="Left" Margin="117,58,0,0" TextWrapping="Wrap" Text="Текст" VerticalAlignment="Top" Height="34" Width="135" FontSize="22"/>
+        <TextBlock x:Name="destTextBlock" HorizontalAlignment="Left" Margin="480,58,0,0" TextWrapping="Wrap" Text="Перевод" VerticalAlignment="Top" Height="34" Width="135" FontSize="22"/>
+        <ComboBox x:Name="destLangComboBox" HorizontalAlignment="Left" Margin="420,20,0,0" VerticalAlignment="Top" Width="222"/>
 
     </Grid>
 </Window>
