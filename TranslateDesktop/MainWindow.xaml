@@ -5,15 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranslateDesktop"
         mc:Ignorable="d"
-        Title="Переводчик" Height="310.938" Width="668" ResizeMode="NoResize">
+        Title="Переводчик" Height="311" Width="668" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:TranslatorViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="TranslateButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="IsEnabled" Value="True"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Text.Length, ElementName=srcTextBox}" Value="0">
+                    <Setter Property="UIElement.IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button x:Name="button" Content="Перевести" HorizontalAlignment="Left" Margin="270,58,0,0" VerticalAlignment="Top" Width="130" Click="button_Click" Height="22"/>
-        <TextBox x:Name="srcTextBox" HorizontalAlignment="Left" Height="176" Margin="20,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="310"/>
-        <TextBox x:Name="destTextBox" HorizontalAlignment="Left" Height="176" Margin="342,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="300"/>
-        <ComboBox x:Name="srcLangComboBox" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="232"/>
-        <TextBlock x:Name="srcTextBlock" HorizontalAlignment="Left" Margin="117,58,0,0" TextWrapping="Wrap" Text="Текст" VerticalAlignment="Top" Height="34" Width="135" FontSize="22"/>
-        <TextBlock x:Name="destTextBlock" HorizontalAlignment="Left" Margin="480,58,0,0" TextWrapping="Wrap" Text="Перевод" VerticalAlignment="Top" Height="34" Width="135" FontSize="22"/>
-        <ComboBox x:Name="destLangComboBox" HorizontalAlignment="Left" Margin="420,20,0,0" VerticalAlignment="Top" Width="222"/>
-
+        <Button x:Name="translate" 
+                Content="Перевести"
+                HorizontalAlignment="Left"
+                Margin="270,58,0,0"
+                VerticalAlignment="Top"
+                Width="130" Height="22"
+                Style="{StaticResource TranslateButtonStyle}"
+                Command="{Binding TranslateCommand}"
+                />
+        <TextBox x:Name="srcTextBox" 
+                 HorizontalAlignment="Left" 
+                 Height="176" Margin="20,92,0,0" 
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Width="310"
+                 Text="{Binding SrcText}"/>
+        <TextBox x:Name="destTextBox" 
+                 HorizontalAlignment="Left" 
+                 Height="176" 
+                 Margin="342,92,0,0" 
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Width="300"
+                 Text="{Binding DestText}"/>
+        <ComboBox x:Name="srcLangComboBox" 
+                  HorizontalAlignment="Left" 
+                  Margin="20,20,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="232" 
+                  ItemsSource="{Binding SrcLangs}" 
+                  SelectedItem="{Binding SelectedSrcLang}"
+                  DisplayMemberPath="Value" 
+                  SelectedValuePath="Key"/>
+        <ComboBox x:Name="destLangComboBox" 
+                  HorizontalAlignment="Left"
+                  Margin="420,20,0,0"
+                  VerticalAlignment="Top" 
+                  Width="222" 
+                  ItemsSource="{Binding DestLangs}"
+                  SelectedItem="{Binding SelectedDestLang}"
+                  DisplayMemberPath="Value" 
+                  SelectedValuePath="Key"/>
+        <TextBlock x:Name="srcTextBlock" 
+                   HorizontalAlignment="Left" 
+                   Margin="117,58,0,0" 
+                   TextWrapping="Wrap" 
+                   Text="Текст" 
+                   VerticalAlignment="Top" 
+                   Height="34" 
+                   Width="135"
+                   FontSize="22"/>
+        <TextBlock x:Name="destTextBlock"
+                   HorizontalAlignment="Left"
+                   Margin="480,58,0,0"
+                   TextWrapping="Wrap"
+                   Text="Перевод"
+                   VerticalAlignment="Top"
+                   Height="34"
+                   Width="135"
+                   FontSize="22"/>
     </Grid>
 </Window>

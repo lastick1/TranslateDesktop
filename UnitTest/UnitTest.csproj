@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiTest.cs" />
+    <Compile Include="ModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
