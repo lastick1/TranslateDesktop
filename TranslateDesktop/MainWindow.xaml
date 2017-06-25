@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TranslateDesktop"
         mc:Ignorable="d"
-        Title="Переводчик" Height="311" Width="668" ResizeMode="NoResize">
+        Title="Переводчик" Height="346" Width="668" ResizeMode="NoResize">
     <Window.DataContext>
         <local:TranslatorViewModel/>
     </Window.DataContext>
@@ -82,5 +82,6 @@
                    Height="34"
                    Width="135"
                    FontSize="22"/>
+        <Label x:Name="label" Content="Переведено сервисом «Яндекс.Переводчик»" HorizontalAlignment="Left" Margin="384,281,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
