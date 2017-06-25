@@ -10,6 +10,10 @@ namespace UnitTest
     public class ModelTest
     {
         TranslatorModel model = new TranslatorModel();
+        string[] targetLangKeys = { "en", "ru" };
+        string[] sourceLangKeys = { "ru", "en" };
+        string[] sourceTextArray = { "Привет", "Hi" };
+        string[] expectTextArray = { "Hi", "Привет" };
 
         [TestMethod]
         public void ModelLangsPropertyTestMethod()
@@ -28,16 +32,63 @@ namespace UnitTest
         [TestMethod]
         public void ModelDetectLangTestMethod()
         {
-            var d = model.DetectLang("Пока");
-            Assert.IsTrue(model.Langs.ContainsKey(d.Key), "Model.DetectLang() works");
-            Assert.IsTrue(model.Langs.ContainsValue(d.Value), "Model.DetectLang() works");
+            for (int i = 0; i < sourceLangKeys.Length; i++)
+            {
+                var source = sourceTextArray[i];
+                var expect = sourceLangKeys[i];
+                var actual = model.DetectLang(source).Key;
+                Assert.AreEqual(expect, actual);
+            }
         }
 
         [TestMethod]
-        public void ModelTranslateTestMethod()
+        public void ModelTranslateTestMethod1()
         {
-            model.TargetLang = "en";
-            Assert.AreEqual(model.Translate("привет"), "hi", "Model.Translate() works");
+            for (int i = 0; i < targetLangKeys.Length; i++)
+            {
+                model.SetTargetLang(model.LangByKey(targetLangKeys[i]));
+                // учитываем бизнес-логику
+                // модель сама определяет язык исходного текста, если он не задан
+                if (i > 0)
+                    model.SetSourceLang(model.LangByKey(sourceLangKeys[i]));
+                var target = targetLangKeys[i];
+                var source = sourceTextArray[i];
+                var expect = expectTextArray[i];
+                var dir = model.TranslateDirection;
+                var actual = model.Translate(source);
+                dir = model.TranslateDirection;
+                Assert.AreEqual(expect, actual,
+                    string.Format("Model.Translate() works. Context #{2}: {0} for {1}",
+                    dir,
+                    source,
+                    i
+                    ));
+            }
+        }
+
+        [TestMethod]
+        public void ModelTranslateTestMethod2()
+        {
+            for (int i = targetLangKeys.Length-1; i >= 0 ; i--)
+            {
+                model.SetTargetLang(model.LangByKey(targetLangKeys[i]));
+                // учитываем бизнес-логику
+                // модель сама определяет язык исходного текста, если он не задан
+                if (i < targetLangKeys.Length - 1)
+                    model.SetSourceLang(model.LangByKey(sourceLangKeys[i]));
+                var target = targetLangKeys[i];
+                var source = sourceTextArray[i];
+                var expect = expectTextArray[i];
+                var dir = model.TranslateDirection;
+                var actual = model.Translate(source);
+                dir = model.TranslateDirection;
+                Assert.AreEqual(expect, actual,
+                    string.Format("Model.Translate() works. Context #{2}: {0} for {1}",
+                    dir,
+                    source,
+                    i
+                    ));
+            }
         }
     }
 }

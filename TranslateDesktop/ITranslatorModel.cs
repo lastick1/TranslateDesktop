@@ -19,12 +19,27 @@ namespace TranslateDesktop
         string UiLang { get; }
 
         /// <summary>
-        /// Целевой язык для перевода
+        /// Задать целевой язык для перевода
         /// </summary>
-        string TargetLang { get; set; }
+        void SetTargetLang(KeyValuePair<string, string> target);
 
         /// <summary>
-        /// Асинхронное получение списка языков
+        /// Задать язык исходного текста
+        /// </summary>
+        void SetSourceLang(KeyValuePair<string, string> source);
+
+        /// <summary>
+        /// Выбранный язык исходного текста
+        /// </summary>
+        KeyValuePair<string, string> SourceLang { get; }
+
+        /// <summary>
+        /// Направление перевода
+        /// </summary>
+        string TranslateDirection { get; }
+
+        /// <summary>
+        /// Получение списка языков
         /// </summary>
         /// <returns></returns>
         Dictionary<string, string> Langs { get; }

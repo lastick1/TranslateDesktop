@@ -9,12 +9,19 @@ using System.Windows.Data;
 
 namespace TranslateDesktop
 {
-    class TranslatorViewModel: DependencyObject
+    /// <summary>
+    /// Модель представления переводчика по MVVM
+    /// </summary>
+    public class TranslatorViewModel: DependencyObject
     {
         public KeyValuePair<string, string> SelectedSrcLang
         {
             get { return (KeyValuePair<string, string>)GetValue(SelectedSrcLangProperty); }
-            set { SetValue(SelectedSrcLangProperty, value); }
+            set
+            {
+                SetValue(SelectedSrcLangProperty, value);
+                model.SetSourceLang(value);
+            }
         }
 
         public static readonly DependencyProperty SelectedSrcLangProperty =
@@ -25,9 +32,10 @@ namespace TranslateDesktop
         public KeyValuePair<string, string> SelectedDestLang
         {
             get { return (KeyValuePair<string, string>)GetValue(SelectedDestLangProperty); }
-            set {
+            set
+            {
                 SetValue(SelectedDestLangProperty, value);
-                model.TargetLang = value.Key;
+                model.SetTargetLang(value);
             }
         }
 
@@ -86,12 +94,24 @@ namespace TranslateDesktop
         private ITranslatorModel model = new TranslatorModel();
         public TranslatorViewModel()
         {
+            // SrcLangs реализовано в виде свойста зависимости специально,
+            // чтобы оно поддерживало асинхронную загрузку,
+            // если таковая будет реализована в дальнейшем
             SrcLangs = model.Langs;
             SelectedDestLang = model.Langs.First((x) => x.Key == "en");
             DestLangs = model.Langs;
             TranslateCommand = new Command(() => {
-                SelectedSrcLang = model.DetectLang(SrcText);
+                model.SetSourceLang(SelectedSrcLang);
+                model.SetTargetLang(SelectedDestLang);
+                // по MVVM бизнес-логику во ViewModel использовать нельзя
+                // это требование считаем бизнес-логикой:
+                // - если язык исходного текста не выбран, 
+                //   то перед переводом приложение должно попытаться определить его самостоятельно;
                 DestText = model.Translate(SrcText);
+                // определение языка происходит в модели, 
+                // поэтому обновляем поле, 
+                // чтобы отразить возможное изменение модели
+                SelectedSrcLang = model.SourceLang;
                 });
         }
         // TODO асинхронная работа

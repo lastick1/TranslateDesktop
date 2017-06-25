@@ -10,28 +10,32 @@ using System.ComponentModel;
 
 namespace TranslateDesktop
 {
+    /// <summary>
+    /// Модель переводчика.
+    /// </summary>
     public class TranslatorModel : ITranslatorModel
     {
+        #region Поля
+        private Dictionary<string, string> _langs = null;
+        private string srcLangKey;
+        private string targetLangKey;
+        #endregion
+
         #region Свойства
         public string ApiKey
         {
-            get
-            {
-                return ConfigurationManager.AppSettings["apiKey"];
-            }
+            get { return ConfigurationManager.AppSettings["apiKey"]; }
         }
 
         public string UiLang
         {
-            get
-            {
-                return ConfigurationManager.AppSettings["ui"];
-            }
+            get { return ConfigurationManager.AppSettings["ui"]; }
+        }
+        public KeyValuePair<string, string> SourceLang
+        {
+            get { return LangByKey(srcLangKey); }
         }
 
-        public string TargetLang { get; set; }
-
-        private Dictionary<string, string> _langs = null;
         public Dictionary<string, string> Langs
         {
             get
@@ -43,7 +47,29 @@ namespace TranslateDesktop
                 return _langs;
             }
         }
+        
+        public string TranslateDirection
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(srcLangKey))
+                {
+                    return targetLangKey;
+                }
+                return string.Format("{0}-{1}", srcLangKey, targetLangKey);
+            }
+        }
         #endregion
+
+        #region Методы
+        public void SetTargetLang(KeyValuePair<string, string> lang)
+        {
+            targetLangKey = lang.Key;
+        }
+        public void SetSourceLang(KeyValuePair<string, string> lang)
+        {
+            srcLangKey = lang.Key;
+        }
 
         public KeyValuePair<string, string> DetectLang(string text)
         {
@@ -62,14 +88,19 @@ namespace TranslateDesktop
 
         public string Translate(string text)
         {
+            if (string.IsNullOrEmpty(srcLangKey))
+            {
+                SetSourceLang(DetectLang(text));
+            }
             XmlDocument document = new XmlDocument();
-            document.LoadXml(YandexTranslateAPI.Translate(ApiKey, text, TargetLang));
+            document.LoadXml(YandexTranslateAPI.Translate(ApiKey, text, TranslateDirection));
             foreach(XmlElement e in document.GetElementsByTagName("text"))
             {
                 return e.InnerText;
             }
             return "";
         }
+        #endregion
 
         #region Private Методы
         private Dictionary<string, string> GetLangs()
@@ -84,7 +115,5 @@ namespace TranslateDesktop
             return langs;
         }
         #endregion
-
-
     }
 }

@@ -35,7 +35,8 @@
                  TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Width="310"
-                 Text="{Binding SrcText}"/>
+                 Text="{Binding SrcText}"
+                 AcceptsReturn="True"/>
         <TextBox x:Name="destTextBox" 
                  HorizontalAlignment="Left" 
                  Height="176" 
@@ -43,7 +44,8 @@
                  TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Width="300"
-                 Text="{Binding DestText}"/>
+                 Text="{Binding DestText}"
+                 AcceptsReturn="True"/>
         <ComboBox x:Name="srcLangComboBox" 
                   HorizontalAlignment="Left" 
                   Margin="20,20,0,0" 
