@@ -12,7 +12,7 @@
 1. Скачайте содержимое репозитория.
 2. Откройте файл TranslateDesktop.sln с помощью Visual Studio
 3. В обозревателе решений (Solution Explorer) найдите файл App.config и откройте его (двойной клик).
-4. Добавьте строку <add key="apiKey" value="API_ключ"/> в секции <appSettings>
+4. Добавьте строку add key="apiKey" value="API_ключ" в секции appSettings
 	и укажите в аттрибуте value значение API_ключа для Яндекс.Переводчика
 5. В обозревателе решений (Solution Explorer) нажмите правой кнопкой мыши на проекте TranslateDesktop и выберите Отладка (Debug) -> Запустить новый экземпляр (Start new instance)
 
