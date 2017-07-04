@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Langs>
+    <dirs>
+        <string>ru-en</string>
+        <string>ru-pl</string>
+        <string>ru-hu</string>
+    </dirs>
+    <langs>
+        <Item key="ru" value="русский"/>
+        <Item key="en" value="английский"/>
+        <Item key="pl" value="польский"/>
+    </langs>
+</Langs>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,9 +92,14 @@ namespace TranslateDesktop
 
         public Command TranslateCommand { get; }
 
-        private ITranslatorModel model = new TranslatorModel();
+        private ITranslatorModel model;
+
         public TranslatorViewModel()
         {
+            model = new TranslatorModel(
+                ConfigurationManager.AppSettings["apiKey"],
+                ConfigurationManager.AppSettings["ui"],
+                new YandexTranslateAPI());
             // SrcLangs реализовано в виде свойста зависимости специально,
             // чтобы оно поддерживало асинхронную загрузку,
             // если таковая будет реализована в дальнейшем

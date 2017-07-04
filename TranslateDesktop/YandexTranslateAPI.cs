@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
-using System.Xml;
-using System.IO;
 
 namespace TranslateDesktop
 {
-    public class YandexTranslateAPI
+    public sealed class YandexTranslateAPI: ITranslateAPI
     {
         private static Uri translateUri = new Uri(@"https://translate.yandex.net/api/v1.5/tr/translate");
         private static Uri getLangsUri = new Uri(@"https://translate.yandex.net/api/v1.5/tr/getLangs");
@@ -23,7 +17,7 @@ namespace TranslateDesktop
         /// <param name="apiKey">API-ключ</param>
         /// <param name="ui">язык интерфейса</param>
         /// <returns></returns>
-        public static string GetLangs(string apiKey, string ui)
+        public string GetLangs(string apiKey, string ui)
         {
             using (WebClient client = new WebClient())
             {
@@ -44,7 +38,7 @@ namespace TranslateDesktop
         /// <param name="apiKey">API-ключ</param>
         /// <param name="text">текст, язык которого требуется определить</param>
         /// <returns></returns>
-        public static string Detect(string apiKey, string text)
+        public string Detect(string apiKey, string text)
         {
             using (WebClient client = new WebClient())
             {
@@ -66,7 +60,7 @@ namespace TranslateDesktop
         /// <param name="text">текст, который требуется перевести</param>
         /// <param name="lang">направление перевода [код_языка_текста-]код_языка_перевода</param>
         /// <returns></returns>
-        public static string Translate(string apiKey, string text, string lang)
+        public string Translate(string apiKey, string text, string lang)
         {
             using (WebClient client = new WebClient())
             {

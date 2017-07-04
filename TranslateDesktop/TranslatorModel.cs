@@ -19,18 +19,14 @@ namespace TranslateDesktop
         private Dictionary<string, string> _langs = null;
         private string srcLangKey;
         private string targetLangKey;
+        private ITranslateAPI _api;
         #endregion
 
         #region Свойства
-        public string ApiKey
-        {
-            get { return ConfigurationManager.AppSettings["apiKey"]; }
-        }
+        public string ApiKey { get; }
 
-        public string UiLang
-        {
-            get { return ConfigurationManager.AppSettings["ui"]; }
-        }
+        public string UiLang { get; }
+
         public KeyValuePair<string, string> SourceLang
         {
             get { return LangByKey(srcLangKey); }
@@ -61,6 +57,13 @@ namespace TranslateDesktop
         }
         #endregion
 
+        public TranslatorModel(string apiKey, string uiLang, ITranslateAPI api)
+        {
+            _api = api;
+            ApiKey = apiKey;
+            UiLang = uiLang;
+        }
+
         #region Методы
         public void SetTargetLang(KeyValuePair<string, string> lang)
         {
@@ -74,7 +77,7 @@ namespace TranslateDesktop
         public KeyValuePair<string, string> DetectLang(string text)
         {
             XmlDocument document = new XmlDocument();
-            document.LoadXml(YandexTranslateAPI.Detect(ApiKey, text));
+            document.LoadXml(_api.Detect(ApiKey, text));
             foreach(XmlElement e in document.GetElementsByTagName("DetectedLang"))
             {
                 return LangByKey(e.Attributes["lang"].Value);
@@ -93,7 +96,8 @@ namespace TranslateDesktop
                 SetSourceLang(DetectLang(text));
             }
             XmlDocument document = new XmlDocument();
-            document.LoadXml(YandexTranslateAPI.Translate(ApiKey, text, TranslateDirection));
+            var xml = _api.Translate(ApiKey, text, TranslateDirection);
+            document.LoadXml(xml);
             foreach(XmlElement e in document.GetElementsByTagName("text"))
             {
                 return e.InnerText;
@@ -107,7 +111,8 @@ namespace TranslateDesktop
         {
             Dictionary<string, string> langs = new Dictionary<string, string>();
             XmlDocument document = new XmlDocument();
-            document.LoadXml(YandexTranslateAPI.GetLangs(ApiKey, UiLang));
+            var xml = _api.GetLangs(ApiKey, UiLang);
+            document.LoadXml(xml);
             foreach (XmlElement e in document.GetElementsByTagName("Item"))
             {
                 langs.Add(e.Attributes["key"].Value, e.Attributes["value"].Value);

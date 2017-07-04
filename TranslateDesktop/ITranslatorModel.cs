@@ -45,6 +45,13 @@ namespace TranslateDesktop
         Dictionary<string, string> Langs { get; }
 
         /// <summary>
+        /// Язык по его коду
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        KeyValuePair<string, string> LangByKey(string key);
+
+        /// <summary>
         /// Определение языка текста
         /// </summary>
         /// <param name="text"></param>
