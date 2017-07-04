@@ -5,7 +5,7 @@ using System.Net;
 
 namespace TranslateDesktop
 {
-    public sealed class YandexTranslateAPI: ITranslateAPI
+    internal sealed class YandexTranslateAPI: ITranslateAPI
     {
         private static Uri translateUri = new Uri(@"https://translate.yandex.net/api/v1.5/tr/translate");
         private static Uri getLangsUri = new Uri(@"https://translate.yandex.net/api/v1.5/tr/getLangs");
