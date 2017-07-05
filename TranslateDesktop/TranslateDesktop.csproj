@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
+    <Compile Include="TranslatorModelException.cs" />
     <Compile Include="ITranslateAPI.cs" />
     <Compile Include="ITranslatorModel.cs" />
     <Compile Include="TranslatorModel.cs" />

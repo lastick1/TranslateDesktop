@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,15 +97,24 @@ namespace TranslateDesktop
 
         public TranslatorViewModel()
         {
-            model = new TranslatorModel(
-                ConfigurationManager.AppSettings["apiKey"],
-                ConfigurationManager.AppSettings["ui"],
-                new YandexTranslateAPI());
+            try
+            {
+                model = new TranslatorModel(
+                    ConfigurationManager.AppSettings["apiKey"],
+                    CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
+                    new YandexTranslateAPI());
+            }
+            catch(TranslatorModelException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+                Application.Current.Shutdown();
+                return;
+            }
             // SrcLangs реализовано в виде свойста зависимости специально,
             // чтобы оно поддерживало асинхронную загрузку,
             // если таковая будет реализована в дальнейшем
             SrcLangs = model.Langs;
-            SelectedDestLang = model.Langs.First((x) => x.Key == "en");
+            SelectedDestLang = model.Langs.First((x) => x.Key == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
             DestLangs = model.Langs;
             TranslateCommand = new Command(() => {
                 model.SetSourceLang(SelectedSrcLang);

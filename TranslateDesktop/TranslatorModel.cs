@@ -59,6 +59,10 @@ namespace TranslateDesktop
 
         public TranslatorModel(string apiKey, string uiLang, ITranslateAPI api)
         {
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(uiLang))
+            {
+                throw new TranslatorModelException("API key must be specified");
+            }
             _api = api;
             ApiKey = apiKey;
             UiLang = uiLang;
@@ -113,6 +117,10 @@ namespace TranslateDesktop
             XmlDocument document = new XmlDocument();
             var xml = _api.GetLangs(ApiKey, UiLang);
             document.LoadXml(xml);
+            foreach (XmlElement e in document.GetElementsByTagName("Error"))
+            {
+                throw new Exception(e.Attributes["message"].Value);
+            }
             foreach (XmlElement e in document.GetElementsByTagName("Item"))
             {
                 langs.Add(e.Attributes["key"].Value, e.Attributes["value"].Value);
