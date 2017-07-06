@@ -31,4 +31,4 @@
    -> Сервис (Tools) -> Диспетчер пакетов NuGet (NuGet Package Manager) -> Управление пакетами NuGet для решения (Manage NuGet Packages for Solution)
    Нажмите "Восстановить" в сообщении об отсутствующих пакетах в решении.
 4. Запустите тесты через обозреватель тестов (Test Explorer):
-   -> Test -> Windows -> Test Explorer
+   -> Тест (Test) -> Окна (Windows) -> Обозреватель Тестов (Test Explorer) -> Запустить все (Run All)
