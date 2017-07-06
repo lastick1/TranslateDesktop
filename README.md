@@ -26,6 +26,9 @@
 ### С использованием Visual Studio версии 2013 и выше
 1. Скачайте содержимое репозитория и откройте файл TranslateDesktop.sln с помощью Visual Studio
 2. Установите NUnit 3 Test Adapter с помощью менеджера расширений: 
-   -> Инструменты (Tools) -> Рашсирения и обновления (Extension and Updates)
-3. Запустите тесты через обозреватель тестов (Test Explorer):
+   -> Сервис (Tools) -> Расширения и обновления (Extension and Updates)
+3. Восстановите пакеты решения с использованием менеджера пакетов NuGet
+   -> Сервис (Tools) -> Диспетчер пакетов NuGet (NuGet Package Manager) -> Управление пакетами NuGet для решения (Manage NuGet Packages for Solution)
+   Нажмите "Восстановить" в сообщении об отсутствующих пакетах в решении.
+4. Запустите тесты через обозреватель тестов (Test Explorer):
    -> Test -> Windows -> Test Explorer
