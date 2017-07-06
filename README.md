@@ -21,3 +21,14 @@
 2. В меню Visual Studio выберите Сборка(Build) -> Собрать решение(Build Solution).
 3. Откройте папку проекта в проводнике и проследуйте в папку TranslateDesktop\bin\Debug
 4. Запустите TranslateDesktop.exe
+
+## Инструкция по сборке и прогону тестов
+### С использованием Visual Studio версии 2013 и выше
+1. Скачайте содержимое репозитория и откройте файл TranslateDesktop.sln с помощью Visual Studio
+2. Установите NUnit 3 Test Adapter с помощью менеджера расширений: 
+   -> Сервис (Tools) -> Расширения и обновления (Extension and Updates)
+3. Восстановите пакеты решения с использованием менеджера пакетов NuGet
+   -> Сервис (Tools) -> Диспетчер пакетов NuGet (NuGet Package Manager) -> Управление пакетами NuGet для решения (Manage NuGet Packages for Solution)
+   Нажмите "Восстановить" в сообщении об отсутствующих пакетах в решении
+4. Запустите тесты через обозреватель тестов (Test Explorer):
+   -> Test -> Windows -> Test Explorer
